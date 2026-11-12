@@ -1,0 +1,2326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>College Practical Code Library</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0f172a;color:#e5e7eb;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{position:sticky;top:0;z-index:10;background:#111827;border-bottom:1px solid #334155;padding:18px 20px}
+.wrap{max-width:1200px;margin:auto}
+h1{margin:0 0 6px;font-size:25px}
+.sub{color:#94a3b8;font-size:14px}
+.controls{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap}
+input{flex:1;min-width:260px;padding:12px 14px;border-radius:9px;border:1px solid #475569;background:#0f172a;color:#fff;font-size:15px}
+button{border:0;border-radius:8px;padding:10px 14px;cursor:pointer;font-weight:600}
+.copy{background:#2563eb;color:#fff}
+.copy.done{background:#16a34a}
+main{max-width:1200px;margin:28px auto;padding:0 20px}
+.card{background:#111827;border:1px solid #334155;border-radius:12px;margin-bottom:22px;overflow:hidden}
+.card-head{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:17px 18px}
+.num{font-size:12px;color:#60a5fa;font-weight:800;letter-spacing:.08em}
+h2{margin:4px 0;font-size:18px}
+.file{font-size:12px;color:#94a3b8}
+pre{margin:0;padding:18px;overflow:auto;background:#020617;border-top:1px solid #334155;max-height:620px}
+code{font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.55;color:#e2e8f0}
+.empty{display:none;text-align:center;padding:40px;color:#94a3b8}
+@media(max-width:650px){.card-head{align-items:flex-start;flex-direction:column}.copy{width:100%}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>College Practical Code Library</h1>
+<div class="sub">12 Python practicals • Works completely offline • No internet, server, or external libraries required</div>
+<div class="controls">
+<input id="search" placeholder="Search practical, topic, function, or code..." oninput="filterCards()">
+<button onclick="clearSearch()">Clear</button>
+</div>
+</div>
+</header>
+<main>
+<div id="count" class="sub" style="margin-bottom:15px"></div>
+
+    <section class="card" data-search="pract1sth.py library borrowing management class library:
+    def __init__(self):
+        self.borrowing_records = {}
+        self.book_borrow_counts = {}
+
+    def add_member(self, member_name):
+        if member_name not in self.borrowing_records:
+            self.borrowing_records[member_name] = []
+
+    def borrow_book(self, member_name, book_title):
+        if member_name not in self.borrowing_records:
+            self.add_member(member_name)
+
+        self.borrowing_records[member_name].append(book_title)
+
+        if book_title not in self.book_borrow_counts:
+            self.book_borrow_counts[book_title] = 0
+
+        self.book_borrow_counts[book_title] += 1
+
+    def compute_average_books(self):
+        total_books = sum(
+            len(books) for books in self.borrowing_records.values()
+        )
+        total_members = len(self.borrowing_records)
+
+        if total_members == 0:
+            return 0
+
+        return total_books / total_members
+
+    def find_highest_and_lowest_borrowed_books(self):
+        if not self.book_borrow_counts:
+            return [], []
+
+        highest_count = max(self.book_borrow_counts.values())
+        lowest_count = min(self.book_borrow_counts.values())
+
+        highest = [
+            book for book, count in self.book_borrow_counts.items()
+            if count == highest_count
+        ]
+
+        lowest = [
+            book for book, count in self.book_borrow_counts.items()
+            if count == lowest_count
+        ]
+
+        return highest, lowest
+
+    def count_members_with_no_borrowings(self):
+        return sum(
+            1 for books in self.borrowing_records.values()
+            if len(books) == 0
+        )
+
+    def most_frequently_borrowed_book(self):
+        if not self.book_borrow_counts:
+            return []
+
+        max_count = max(self.book_borrow_counts.values())
+
+        return [
+            book for book, count in self.book_borrow_counts.items()
+            if count == max_count
+        ]
+
+
+# example usage
+library = library()
+
+library.add_member(&quot;alice&quot;)
+library.add_member(&quot;bob&quot;)
+library.add_member(&quot;charlie&quot;)
+
+library.borrow_book(&quot;alice&quot;, &quot;book a&quot;)
+library.borrow_book(&quot;alice&quot;, &quot;book b&quot;)
+library.borrow_book(&quot;bob&quot;, &quot;book a&quot;)
+library.borrow_book(&quot;bob&quot;, &quot;book c&quot;)
+library.borrow_book(&quot;charlie&quot;, &quot;book a&quot;)
+
+print(&quot;average number of books borrowed:&quot;,
+      library.compute_average_books())
+
+highest, lowest = library.find_highest_and_lowest_borrowed_books()
+
+print(&quot;most borrowed book:&quot;, highest)
+print(&quot;least borrowed book:&quot;, lowest)
+
+print(&quot;members with no borrowings:&quot;,
+      library.count_members_with_no_borrowings())
+
+print(&quot;most frequently borrowed book(s):&quot;,
+      library.most_frequently_borrowed_book())">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 1</div>
+          <h2>Library Borrowing Management</h2>
+          <div class="file">pract1sth.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code1', this)">Copy Code</button>
+      </div>
+      <pre id="code1"><code>class Library:
+    def __init__(self):
+        self.borrowing_records = {}
+        self.book_borrow_counts = {}
+
+    def add_member(self, member_name):
+        if member_name not in self.borrowing_records:
+            self.borrowing_records[member_name] = []
+
+    def borrow_book(self, member_name, book_title):
+        if member_name not in self.borrowing_records:
+            self.add_member(member_name)
+
+        self.borrowing_records[member_name].append(book_title)
+
+        if book_title not in self.book_borrow_counts:
+            self.book_borrow_counts[book_title] = 0
+
+        self.book_borrow_counts[book_title] += 1
+
+    def compute_average_books(self):
+        total_books = sum(
+            len(books) for books in self.borrowing_records.values()
+        )
+        total_members = len(self.borrowing_records)
+
+        if total_members == 0:
+            return 0
+
+        return total_books / total_members
+
+    def find_highest_and_lowest_borrowed_books(self):
+        if not self.book_borrow_counts:
+            return [], []
+
+        highest_count = max(self.book_borrow_counts.values())
+        lowest_count = min(self.book_borrow_counts.values())
+
+        highest = [
+            book for book, count in self.book_borrow_counts.items()
+            if count == highest_count
+        ]
+
+        lowest = [
+            book for book, count in self.book_borrow_counts.items()
+            if count == lowest_count
+        ]
+
+        return highest, lowest
+
+    def count_members_with_no_borrowings(self):
+        return sum(
+            1 for books in self.borrowing_records.values()
+            if len(books) == 0
+        )
+
+    def most_frequently_borrowed_book(self):
+        if not self.book_borrow_counts:
+            return []
+
+        max_count = max(self.book_borrow_counts.values())
+
+        return [
+            book for book, count in self.book_borrow_counts.items()
+            if count == max_count
+        ]
+
+
+# Example Usage
+library = Library()
+
+library.add_member(&quot;Alice&quot;)
+library.add_member(&quot;Bob&quot;)
+library.add_member(&quot;Charlie&quot;)
+
+library.borrow_book(&quot;Alice&quot;, &quot;Book A&quot;)
+library.borrow_book(&quot;Alice&quot;, &quot;Book B&quot;)
+library.borrow_book(&quot;Bob&quot;, &quot;Book A&quot;)
+library.borrow_book(&quot;Bob&quot;, &quot;Book C&quot;)
+library.borrow_book(&quot;Charlie&quot;, &quot;Book A&quot;)
+
+print(&quot;Average number of books borrowed:&quot;,
+      library.compute_average_books())
+
+highest, lowest = library.find_highest_and_lowest_borrowed_books()
+
+print(&quot;Most borrowed book:&quot;, highest)
+print(&quot;Least borrowed book:&quot;, lowest)
+
+print(&quot;Members with no borrowings:&quot;,
+      library.count_members_with_no_borrowings())
+
+print(&quot;Most frequently borrowed book(s):&quot;,
+      library.most_frequently_borrowed_book())</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract2nd.py linear search and binary search def linear_search(account_list, target): 
+    for account_id in account_list: 
+        if account_id == target: 
+            return true 
+    return false 
+ 
+def binary_search(account_list, target): 
+    account_list.sort() 
+    left, right = 0, len(account_list) - 1 
+ 
+    while left &lt;= right: 
+        mid = (left + right) // 2 
+        if account_list[mid] == target: 
+            return true 
+        elif account_list[mid] &lt; target: 
+            left = mid + 1 
+        else: 
+            right = mid - 1 
+ 
+    return false 
+ 
+if __name__ == &#x27;__main__&#x27;: 
+    customer_accounts = [105, 203, 150, 98, 220, 333, 120] 
+    target_id = 150 
+ 
+    if linear_search(customer_accounts, target_id): 
+        print(f&quot;linear search: account id {target_id} found.&quot;) 
+    else: 
+        print(f&quot;linear search: account id {target_id} not found.&quot;) 
+ 
+if binary_search(customer_accounts, target_id): 
+        print(f&quot;binary search: account id {target_id} found.&quot;) 
+else: 
+        print(f&quot;binary search: account id {target_id} not found.&quot;)">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 2</div>
+          <h2>Linear Search and Binary Search</h2>
+          <div class="file">pract2nd.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code2', this)">Copy Code</button>
+      </div>
+      <pre id="code2"><code>def linear_search(account_list, target): 
+    for account_id in account_list: 
+        if account_id == target: 
+            return True 
+    return False 
+ 
+def binary_search(account_list, target): 
+    account_list.sort() 
+    left, right = 0, len(account_list) - 1 
+ 
+    while left &lt;= right: 
+        mid = (left + right) // 2 
+        if account_list[mid] == target: 
+            return True 
+        elif account_list[mid] &lt; target: 
+            left = mid + 1 
+        else: 
+            right = mid - 1 
+ 
+    return False 
+ 
+if __name__ == &#x27;__main__&#x27;: 
+    customer_accounts = [105, 203, 150, 98, 220, 333, 120] 
+    target_id = 150 
+ 
+    if linear_search(customer_accounts, target_id): 
+        print(f&quot;Linear Search: Account ID {target_id} found.&quot;) 
+    else: 
+        print(f&quot;Linear Search: Account ID {target_id} not found.&quot;) 
+ 
+if binary_search(customer_accounts, target_id): 
+        print(f&quot;Binary Search: Account ID {target_id} found.&quot;) 
+else: 
+        print(f&quot;Binary Search: Account ID {target_id} not found.&quot;)</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract3rd.py text editor — undo and redo class texteditor: 
+    def __init__(self): 
+        self.document = []      # list to store each line of the document 
+        self.undo_stack = []    # stack to store previous states for undo 
+        self.redo_stack = []    # stack to store undone states for redo 
+ 
+    # add a new line/text to the document 
+    def make_change(self, change): 
+        self.undo_stack.append(self.document.copy())  # save current state for undo 
+        self.document.append(change)                  # add new line/text 
+        self.redo_stack.clear()                       # clear redo stack after a new change 
+        print(f&quot;\nchange made: &#x27;{change}&#x27;&quot;) 
+ 
+    # undo the last change 
+    def undo(self): 
+        if not self.undo_stack: 
+            print(&quot;\nnothing to undo!&quot;) 
+            return 
+        self.redo_stack.append(self.document.copy())  # save current state for redo 
+        self.document = self.undo_stack.pop()         # revert to the previous state 
+        print(&quot;\nundo performed.&quot;) 
+ 
+    # redo the last undone change 
+    def redo(self): 
+        if not self.redo_stack: 
+            print(&quot;\nnothing to redo!&quot;) 
+            return 
+        self.undo_stack.append(self.document.copy())  # save current state for undo 
+        self.document = self.redo_stack.pop()         # reapply the undone change 
+        print(&quot;\nredo performed.&quot;) 
+ 
+    # display the current document 
+    def display_state(self): 
+        print(&quot;\n--- current document ---&quot;) 
+        if not self.document: 
+            print(&quot;[empty document]&quot;) 
+        else: 
+            for i in range(len(self.document)):       # loop over index numbers 
+                print(f&quot;{i+1}: {self.document[i]}&quot;)   # i+1 for line number, document[i] for text 
+        print(&quot;-------------------------&quot;) 
+ 
+ 
+# menu driven code 
+editor = texteditor() 
+while true: 
+    # display menu 
+    print(&quot;\n--- menu ---&quot;) 
+    print(&quot;1. add line/text&quot;) 
+    print(&quot;2. undo&quot;) 
+    print(&quot;3. redo&quot;) 
+    print(&quot;4. show document&quot;) 
+    print(&quot;5. exit&quot;) 
+ 
+    choice = input(&quot;enter your choice: &quot;) 
+    if choice == &#x27;1&#x27;: 
+        text = input(&quot;enter line/text to add: &quot;) 
+        editor.make_change(text)                      # add new line/text 
+    elif choice == &#x27;2&#x27;: 
+        editor.undo()                                 # undo last change 
+    elif choice == &#x27;3&#x27;: 
+        editor.redo()                                 # redo last undone change 
+    elif choice == &#x27;4&#x27;: 
+        editor.display_state()                        # display current document 
+    elif choice == &#x27;5&#x27;: 
+        print(&quot;exiting...&quot;) 
+        break 
+    else: 
+        print(&quot;invalid choice! try again.&quot;)">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 3</div>
+          <h2>Text Editor — Undo and Redo</h2>
+          <div class="file">pract3rd.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code3', this)">Copy Code</button>
+      </div>
+      <pre id="code3"><code>class TextEditor: 
+    def __init__(self): 
+        self.document = []      # List to store each line of the document 
+        self.undo_stack = []    # Stack to store previous states for Undo 
+        self.redo_stack = []    # Stack to store undone states for Redo 
+ 
+    # Add a new line/text to the document 
+    def make_change(self, change): 
+        self.undo_stack.append(self.document.copy())  # Save current state for Undo 
+        self.document.append(change)                  # Add new line/text 
+        self.redo_stack.clear()                       # Clear Redo stack after a new change 
+        print(f&quot;\nChange Made: &#x27;{change}&#x27;&quot;) 
+ 
+    # Undo the last change 
+    def undo(self): 
+        if not self.undo_stack: 
+            print(&quot;\nNothing to Undo!&quot;) 
+            return 
+        self.redo_stack.append(self.document.copy())  # Save current state for Redo 
+        self.document = self.undo_stack.pop()         # Revert to the previous state 
+        print(&quot;\nUndo performed.&quot;) 
+ 
+    # Redo the last undone change 
+    def redo(self): 
+        if not self.redo_stack: 
+            print(&quot;\nNothing to Redo!&quot;) 
+            return 
+        self.undo_stack.append(self.document.copy())  # Save current state for Undo 
+        self.document = self.redo_stack.pop()         # Reapply the undone change 
+        print(&quot;\nRedo performed.&quot;) 
+ 
+    # Display the current document 
+    def display_state(self): 
+        print(&quot;\n--- Current Document ---&quot;) 
+        if not self.document: 
+            print(&quot;[Empty Document]&quot;) 
+        else: 
+            for i in range(len(self.document)):       # loop over index numbers 
+                print(f&quot;{i+1}: {self.document[i]}&quot;)   # i+1 for line number, document[i] for text 
+        print(&quot;-------------------------&quot;) 
+ 
+ 
+# Menu Driven Code 
+editor = TextEditor() 
+while True: 
+    # Display menu 
+    print(&quot;\n--- Menu ---&quot;) 
+    print(&quot;1. Add Line/Text&quot;) 
+    print(&quot;2. Undo&quot;) 
+    print(&quot;3. Redo&quot;) 
+    print(&quot;4. Show Document&quot;) 
+    print(&quot;5. Exit&quot;) 
+ 
+    choice = input(&quot;Enter your choice: &quot;) 
+    if choice == &#x27;1&#x27;: 
+        text = input(&quot;Enter line/text to add: &quot;) 
+        editor.make_change(text)                      # Add new line/text 
+    elif choice == &#x27;2&#x27;: 
+        editor.undo()                                 # Undo last change 
+    elif choice == &#x27;3&#x27;: 
+        editor.redo()                                 # Redo last undone change 
+    elif choice == &#x27;4&#x27;: 
+        editor.display_state()                        # Display current document 
+    elif choice == &#x27;5&#x27;: 
+        print(&quot;Exiting...&quot;) 
+        break 
+    else: 
+        print(&quot;Invalid choice! Try again.&quot;)</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract4th.py event processing system using queue from collections import deque
+class eventprocessingsystem:
+    def __init__(self):
+        self.event_queue = deque()
+
+    def add_event(self, event):
+        &quot;&quot;&quot;add a new event to the queue&quot;&quot;&quot;
+        self.event_queue.append(event)
+        print(f&quot;event &#x27;{event}&#x27; added to queue.&quot;)
+
+    def process_next_event(self):
+        &quot;&quot;&quot;process and remove the oldest event&quot;&quot;&quot;
+        if self.event_queue:
+            event = self.event_queue.popleft()
+            print(f&quot;processing event: {event}&quot;)
+        else:
+            print(&quot;no events to process.&quot;)
+
+    def display_pending_events(self):
+        &quot;&quot;&quot;display all events currently in queue&quot;&quot;&quot;
+        if self.event_queue:
+            print(&quot;pending events:&quot;, list(self.event_queue))
+        else:
+            print(&quot;no pending events.&quot;)
+
+    def cancel_event(self, event):
+        &quot;&quot;&quot;cancel a specific event if not yet processed&quot;&quot;&quot;
+        if event in self.event_queue:
+            self.event_queue.remove(event)
+            print(f&quot;event &#x27;{event}&#x27; canceled.&quot;)
+        else:
+            print(f&quot;event &#x27;{event}&#x27; not found or already processed.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    system = eventprocessingsystem()
+
+    system.add_event(&quot;login request&quot;)
+    system.add_event(&quot;file upload&quot;)
+    system.add_event(&quot;database backup&quot;)
+
+    system.display_pending_events()
+
+    system.cancel_event(&quot;file upload&quot;)
+
+    system.display_pending_events()
+
+    system.process_next_event()
+
+    system.display_pending_events()">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 4</div>
+          <h2>Event Processing System using Queue</h2>
+          <div class="file">pract4th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code4', this)">Copy Code</button>
+      </div>
+      <pre id="code4"><code>from collections import deque
+class EventProcessingSystem:
+    def __init__(self):
+        self.event_queue = deque()
+
+    def add_event(self, event):
+        &quot;&quot;&quot;Add a new event to the queue&quot;&quot;&quot;
+        self.event_queue.append(event)
+        print(f&quot;Event &#x27;{event}&#x27; added to queue.&quot;)
+
+    def process_next_event(self):
+        &quot;&quot;&quot;Process and remove the oldest event&quot;&quot;&quot;
+        if self.event_queue:
+            event = self.event_queue.popleft()
+            print(f&quot;Processing event: {event}&quot;)
+        else:
+            print(&quot;No events to process.&quot;)
+
+    def display_pending_events(self):
+        &quot;&quot;&quot;Display all events currently in queue&quot;&quot;&quot;
+        if self.event_queue:
+            print(&quot;Pending Events:&quot;, list(self.event_queue))
+        else:
+            print(&quot;No pending events.&quot;)
+
+    def cancel_event(self, event):
+        &quot;&quot;&quot;Cancel a specific event if not yet processed&quot;&quot;&quot;
+        if event in self.event_queue:
+            self.event_queue.remove(event)
+            print(f&quot;Event &#x27;{event}&#x27; canceled.&quot;)
+        else:
+            print(f&quot;Event &#x27;{event}&#x27; not found or already processed.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    system = EventProcessingSystem()
+
+    system.add_event(&quot;Login Request&quot;)
+    system.add_event(&quot;File Upload&quot;)
+    system.add_event(&quot;Database Backup&quot;)
+
+    system.display_pending_events()
+
+    system.cancel_event(&quot;File Upload&quot;)
+
+    system.display_pending_events()
+
+    system.process_next_event()
+
+    system.display_pending_events()</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract5th.py student record management using doubly linked list class studentnode:
+    def __init__(self, roll, name, marks):
+        self.roll = roll
+        self.name = name
+        self.marks = marks
+        self.next = none
+        self.prev = none
+
+
+class studentrecordmanagement:
+    def __init__(self):
+        self.head = none
+
+    def add_student(self, roll, name, marks):
+        new_node = studentnode(roll, name, marks)
+        if self.head is none:
+            self.head = new_node
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_node
+            new_node.prev = temp
+        print(f&quot; student {name} added successfully.&quot;)
+
+    def delete_student(self, roll):
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                if temp.prev:
+                    temp.prev.next = temp.next
+                if temp.next:
+                    temp.next.prev = temp.prev
+                if temp == self.head:
+                    self.head = temp.next
+                print(f&quot;️ student with roll {roll} deleted.&quot;)
+                return
+            temp = temp.next
+        print(&quot; student not found.&quot;)
+
+    def update_student(self, roll, name=none, marks=none):
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                if name:
+                    temp.name = name
+                if marks is not none:
+                    temp.marks = marks
+                print(f&quot; student with roll {roll} updated.&quot;)
+                return
+            temp = temp.next
+        print(&quot; student not found.&quot;)
+
+    def search_student(self, roll):
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                print(f&quot;found -&gt; roll: {temp.roll}, name: {temp.name}, marks: {temp.marks}&quot;)
+                return temp
+            temp = temp.next
+        print(&quot; student not found.&quot;)
+        return none
+    def display(self):
+        if not self.head:
+            print(&quot; no student records available.&quot;)
+            return
+        temp = self.head
+        print(&quot;\n student records:&quot;)
+        print(&quot;rollno\tname\tmarks&quot;)
+        while temp:
+            print(f&quot;{temp.roll}\t{temp.name}\t{temp.marks}&quot;)
+            temp = temp.next
+
+    def sort_records(self, key=&quot;roll&quot;, order=&quot;asc&quot;):
+        if not self.head or not self.head.next:
+            return
+        swapped = true
+        while swapped:
+            swapped = false
+            temp = self.head
+            while temp.next:
+                if key == &quot;roll&quot;:
+                    cond = (temp.roll &gt; temp.next.roll)
+                else:
+                    cond = (temp.marks &gt; temp.next.marks)
+
+                if order == &quot;desc&quot;:
+                    cond = not cond
+
+                if cond:
+                    temp.roll, temp.next.roll = temp.next.roll, temp.roll
+                    temp.name, temp.next.name = temp.next.name, temp.name
+                    temp.marks, temp.next.marks = temp.next.marks, temp.marks
+                    swapped = true
+                temp = temp.next
+        print(f&quot; records sorted by {key} ({order}).&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    system = studentrecordmanagement()
+
+    system.add_student(1, &quot;alex&quot;, 85)
+    system.add_student(3, &quot;banty&quot;, 75)
+    system.add_student(2, &quot;komal&quot;, 90)
+
+    system.display()
+
+    system.search_student(2)
+
+    system.update_student(3, marks=80)
+
+    system.delete_student(1)
+
+    system.sort_records(key=&quot;marks&quot;, order=&quot;desc&quot;)
+    system.display()
+">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 5</div>
+          <h2>Student Record Management using Doubly Linked List</h2>
+          <div class="file">pract5th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code5', this)">Copy Code</button>
+      </div>
+      <pre id="code5"><code>class StudentNode:
+    def __init__(self, roll, name, marks):
+        self.roll = roll
+        self.name = name
+        self.marks = marks
+        self.next = None
+        self.prev = None
+
+
+class StudentRecordManagement:
+    def __init__(self):
+        self.head = None
+
+    def add_student(self, roll, name, marks):
+        new_node = StudentNode(roll, name, marks)
+        if self.head is None:
+            self.head = new_node
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_node
+            new_node.prev = temp
+        print(f&quot; Student {name} added successfully.&quot;)
+
+    def delete_student(self, roll):
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                if temp.prev:
+                    temp.prev.next = temp.next
+                if temp.next:
+                    temp.next.prev = temp.prev
+                if temp == self.head:
+                    self.head = temp.next
+                print(f&quot;️ Student with Roll {roll} deleted.&quot;)
+                return
+            temp = temp.next
+        print(&quot; Student not found.&quot;)
+
+    def update_student(self, roll, name=None, marks=None):
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                if name:
+                    temp.name = name
+                if marks is not None:
+                    temp.marks = marks
+                print(f&quot; Student with Roll {roll} updated.&quot;)
+                return
+            temp = temp.next
+        print(&quot; Student not found.&quot;)
+
+    def search_student(self, roll):
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                print(f&quot;Found -&gt; Roll: {temp.roll}, Name: {temp.name}, Marks: {temp.marks}&quot;)
+                return temp
+            temp = temp.next
+        print(&quot; Student not found.&quot;)
+        return None
+    def display(self):
+        if not self.head:
+            print(&quot; No student records available.&quot;)
+            return
+        temp = self.head
+        print(&quot;\n Student Records:&quot;)
+        print(&quot;RollNo\tName\tMarks&quot;)
+        while temp:
+            print(f&quot;{temp.roll}\t{temp.name}\t{temp.marks}&quot;)
+            temp = temp.next
+
+    def sort_records(self, key=&quot;roll&quot;, order=&quot;asc&quot;):
+        if not self.head or not self.head.next:
+            return
+        swapped = True
+        while swapped:
+            swapped = False
+            temp = self.head
+            while temp.next:
+                if key == &quot;roll&quot;:
+                    cond = (temp.roll &gt; temp.next.roll)
+                else:
+                    cond = (temp.marks &gt; temp.next.marks)
+
+                if order == &quot;desc&quot;:
+                    cond = not cond
+
+                if cond:
+                    temp.roll, temp.next.roll = temp.next.roll, temp.roll
+                    temp.name, temp.next.name = temp.next.name, temp.name
+                    temp.marks, temp.next.marks = temp.next.marks, temp.marks
+                    swapped = True
+                temp = temp.next
+        print(f&quot; Records sorted by {key} ({order}).&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    system = StudentRecordManagement()
+
+    system.add_student(1, &quot;alex&quot;, 85)
+    system.add_student(3, &quot;Banty&quot;, 75)
+    system.add_student(2, &quot;komal&quot;, 90)
+
+    system.display()
+
+    system.search_student(2)
+
+    system.update_student(3, marks=80)
+
+    system.delete_student(1)
+
+    system.sort_records(key=&quot;marks&quot;, order=&quot;desc&quot;)
+    system.display()
+</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract6th.py hash table using chaining class hashtable:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [[] for _ in range(size)]  # list of lists for chaining
+
+    def hash_function(self, key):
+        &quot;&quot;&quot;division method hash function&quot;&quot;&quot;
+        return key % self.size
+
+    def insert(self, key, value):
+        &quot;&quot;&quot;insert a key-value pair&quot;&quot;&quot;
+        index = self.hash_function(key)
+        # check if key already exists; if yes, update it
+        for pair in self.table[index]:
+            if pair[0] == key:
+                pair[1] = value
+                print(f&quot;updated key {key} with value {value}.&quot;)
+                return
+        # otherwise, append a new pair
+        self.table[index].append([key, value])
+        print(f&quot;inserted ({key}, {value}) at index {index}.&quot;)
+
+    def search(self, key):
+        &quot;&quot;&quot;search for a value by key&quot;&quot;&quot;
+        index = self.hash_function(key)
+        for pair in self.table[index]:
+            if pair[0] == key:
+                print(f&quot;found key {key} with value {pair[1]} at index {index}.&quot;)
+                return pair[1]
+        print(f&quot;key {key} not found.&quot;)
+        return none
+
+    def delete(self, key):
+        &quot;&quot;&quot;delete a key-value pair&quot;&quot;&quot;
+        index = self.hash_function(key)
+        for pair in self.table[index]:
+            if pair[0] == key:
+                self.table[index].remove(pair)
+                print(f&quot;deleted key {key} from index {index}.&quot;)
+                return
+        print(f&quot;key {key} not found. cannot delete.&quot;)
+
+    def display(self):
+        &quot;&quot;&quot;display the hash table&quot;&quot;&quot;
+        print(&quot;\nhash table:&quot;)
+        for i, chain in enumerate(self.table):
+            print(f&quot;index {i}: {chain}&quot;)
+        print()
+
+# --- example usage ---
+if __name__ == &quot;__main__&quot;:
+    ht = hashtable()
+
+    ht.insert(10, &quot;apple&quot;)
+    ht.insert(20, &quot;banana&quot;)
+    ht.insert(15, &quot;cherry&quot;)
+    ht.insert(25, &quot;mango&quot;)   # collision with 15 (same index)
+    ht.display()
+
+    ht.search(15)
+    ht.search(99)
+
+    ht.delete(20)
+    ht.delete(99)
+    ht.display()
+">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 6</div>
+          <h2>Hash Table using Chaining</h2>
+          <div class="file">pract6th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code6', this)">Copy Code</button>
+      </div>
+      <pre id="code6"><code>class HashTable:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [[] for _ in range(size)]  # list of lists for chaining
+
+    def hash_function(self, key):
+        &quot;&quot;&quot;Division method hash function&quot;&quot;&quot;
+        return key % self.size
+
+    def insert(self, key, value):
+        &quot;&quot;&quot;Insert a key-value pair&quot;&quot;&quot;
+        index = self.hash_function(key)
+        # Check if key already exists; if yes, update it
+        for pair in self.table[index]:
+            if pair[0] == key:
+                pair[1] = value
+                print(f&quot;Updated key {key} with value {value}.&quot;)
+                return
+        # Otherwise, append a new pair
+        self.table[index].append([key, value])
+        print(f&quot;Inserted ({key}, {value}) at index {index}.&quot;)
+
+    def search(self, key):
+        &quot;&quot;&quot;Search for a value by key&quot;&quot;&quot;
+        index = self.hash_function(key)
+        for pair in self.table[index]:
+            if pair[0] == key:
+                print(f&quot;Found key {key} with value {pair[1]} at index {index}.&quot;)
+                return pair[1]
+        print(f&quot;Key {key} not found.&quot;)
+        return None
+
+    def delete(self, key):
+        &quot;&quot;&quot;Delete a key-value pair&quot;&quot;&quot;
+        index = self.hash_function(key)
+        for pair in self.table[index]:
+            if pair[0] == key:
+                self.table[index].remove(pair)
+                print(f&quot;Deleted key {key} from index {index}.&quot;)
+                return
+        print(f&quot;Key {key} not found. Cannot delete.&quot;)
+
+    def display(self):
+        &quot;&quot;&quot;Display the hash table&quot;&quot;&quot;
+        print(&quot;\nHash Table:&quot;)
+        for i, chain in enumerate(self.table):
+            print(f&quot;Index {i}: {chain}&quot;)
+        print()
+
+# --- Example Usage ---
+if __name__ == &quot;__main__&quot;:
+    ht = HashTable()
+
+    ht.insert(10, &quot;Apple&quot;)
+    ht.insert(20, &quot;Banana&quot;)
+    ht.insert(15, &quot;Cherry&quot;)
+    ht.insert(25, &quot;Mango&quot;)   # collision with 15 (same index)
+    ht.display()
+
+    ht.search(15)
+    ht.search(99)
+
+    ht.delete(20)
+    ht.delete(99)
+    ht.display()
+</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract7th.py extendible hashing class bucket:
+    def __init__(self, local_depth):
+        self.local_depth = local_depth
+        self.items = {}  # key-value pairs
+
+    def is_full(self, threshold):
+        return len(self.items) &gt;= threshold
+
+
+class extendiblehashtable:
+    def __init__(self, bucket_size=2):
+        self.global_depth = 1
+        self.bucket_size = bucket_size
+        self.directory = [bucket(local_depth=1) for _ in range(2)]  # 2^1 entries
+
+    def _hash(self, key):
+        &quot;&quot;&quot;hash function returning integer.&quot;&quot;&quot;
+        return hash(key) &amp; 0xffffffff  # keep positive
+
+    def _get_bucket_index(self, key):
+        &quot;&quot;&quot;return directory index using lower bits of hash.&quot;&quot;&quot;
+        hash_value = self._hash(key)
+        return hash_value &amp; ((1 &lt;&lt; self.global_depth) - 1)
+
+    def insert(self, key, value):
+        index = self._get_bucket_index(key)
+        bucket = self.directory[index]
+
+        # if key already exists, update value
+        if key in bucket.items:
+            bucket.items[key] = value
+            return
+
+        # if bucket not full, insert
+        if not bucket.is_full(self.bucket_size):
+            bucket.items[key] = value
+        else:
+            # bucket full → split
+            self._split_bucket(index)
+            # reinsert the key after split
+            self.insert(key, value)
+
+    def _split_bucket(self, index):
+        bucket = self.directory[index]
+        print(f&quot;splitting bucket with local depth {bucket.local_depth}...&quot;)
+
+        if bucket.local_depth == self.global_depth:
+            # double the directory
+            print(&quot;doubling directory...&quot;)
+            self.directory += self.directory
+            self.global_depth += 1
+
+        # create new bucket
+        new_bucket = bucket(local_depth=bucket.local_depth + 1)
+        old_items = list(bucket.items.items())
+        bucket.items.clear()
+        bucket.local_depth += 1
+
+        # update directory pointers
+        pattern_bit = 1 &lt;&lt; (bucket.local_depth - 1)
+        for i in range(len(self.directory)):
+            if self.directory[i] is bucket and (i &amp; pattern_bit):
+                self.directory[i] = new_bucket
+
+        # redistribute items
+        for k, v in old_items:
+            self.insert(k, v)
+
+    def search(self, key):
+        index = self._get_bucket_index(key)
+        bucket = self.directory[index]
+        return bucket.items.get(key, none)
+
+    def delete(self, key):
+        index = self._get_bucket_index(key)
+        bucket = self.directory[index]
+        if key in bucket.items:
+            del bucket.items[key]
+            print(f&quot;deleted key {key}&quot;)
+        else:
+            print(&quot;key not found!&quot;)
+
+    def display(self):
+        print(&quot;\n--- hash table ---&quot;)
+        print(f&quot;global depth: {self.global_depth}&quot;)
+        seen = set()
+        for i, bucket in enumerate(self.directory):
+            if id(bucket) not in seen:
+                seen.add(id(bucket))
+                print(f&quot;index {i:0{self.global_depth}b}: {bucket.items}, ld={bucket.local_depth}&quot;)
+        print(&quot;------------------\n&quot;)
+
+
+# example usage
+if __name__ == &quot;__main__&quot;:
+    ht = extendiblehashtable(bucket_size=2)
+    ht.insert(5, &quot;a&quot;)
+    ht.insert(7, &quot;b&quot;)
+    ht.insert(13, &quot;c&quot;)
+    ht.insert(9, &quot;d&quot;)
+    ht.display()
+
+    print(&quot;search(7):&quot;, ht.search(7))
+    ht.delete(13)
+    ht.display()
+">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 7</div>
+          <h2>Extendible Hashing</h2>
+          <div class="file">pract7th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code7', this)">Copy Code</button>
+      </div>
+      <pre id="code7"><code>class Bucket:
+    def __init__(self, local_depth):
+        self.local_depth = local_depth
+        self.items = {}  # key-value pairs
+
+    def is_full(self, threshold):
+        return len(self.items) &gt;= threshold
+
+
+class ExtendibleHashTable:
+    def __init__(self, bucket_size=2):
+        self.global_depth = 1
+        self.bucket_size = bucket_size
+        self.directory = [Bucket(local_depth=1) for _ in range(2)]  # 2^1 entries
+
+    def _hash(self, key):
+        &quot;&quot;&quot;Hash function returning integer.&quot;&quot;&quot;
+        return hash(key) &amp; 0xFFFFFFFF  # keep positive
+
+    def _get_bucket_index(self, key):
+        &quot;&quot;&quot;Return directory index using lower bits of hash.&quot;&quot;&quot;
+        hash_value = self._hash(key)
+        return hash_value &amp; ((1 &lt;&lt; self.global_depth) - 1)
+
+    def insert(self, key, value):
+        index = self._get_bucket_index(key)
+        bucket = self.directory[index]
+
+        # If key already exists, update value
+        if key in bucket.items:
+            bucket.items[key] = value
+            return
+
+        # If bucket not full, insert
+        if not bucket.is_full(self.bucket_size):
+            bucket.items[key] = value
+        else:
+            # Bucket full → split
+            self._split_bucket(index)
+            # Reinsert the key after split
+            self.insert(key, value)
+
+    def _split_bucket(self, index):
+        bucket = self.directory[index]
+        print(f&quot;Splitting bucket with local depth {bucket.local_depth}...&quot;)
+
+        if bucket.local_depth == self.global_depth:
+            # Double the directory
+            print(&quot;Doubling directory...&quot;)
+            self.directory += self.directory
+            self.global_depth += 1
+
+        # Create new bucket
+        new_bucket = Bucket(local_depth=bucket.local_depth + 1)
+        old_items = list(bucket.items.items())
+        bucket.items.clear()
+        bucket.local_depth += 1
+
+        # Update directory pointers
+        pattern_bit = 1 &lt;&lt; (bucket.local_depth - 1)
+        for i in range(len(self.directory)):
+            if self.directory[i] is bucket and (i &amp; pattern_bit):
+                self.directory[i] = new_bucket
+
+        # Redistribute items
+        for k, v in old_items:
+            self.insert(k, v)
+
+    def search(self, key):
+        index = self._get_bucket_index(key)
+        bucket = self.directory[index]
+        return bucket.items.get(key, None)
+
+    def delete(self, key):
+        index = self._get_bucket_index(key)
+        bucket = self.directory[index]
+        if key in bucket.items:
+            del bucket.items[key]
+            print(f&quot;Deleted key {key}&quot;)
+        else:
+            print(&quot;Key not found!&quot;)
+
+    def display(self):
+        print(&quot;\n--- Hash Table ---&quot;)
+        print(f&quot;Global Depth: {self.global_depth}&quot;)
+        seen = set()
+        for i, bucket in enumerate(self.directory):
+            if id(bucket) not in seen:
+                seen.add(id(bucket))
+                print(f&quot;Index {i:0{self.global_depth}b}: {bucket.items}, LD={bucket.local_depth}&quot;)
+        print(&quot;------------------\n&quot;)
+
+
+# Example Usage
+if __name__ == &quot;__main__&quot;:
+    ht = ExtendibleHashTable(bucket_size=2)
+    ht.insert(5, &quot;A&quot;)
+    ht.insert(7, &quot;B&quot;)
+    ht.insert(13, &quot;C&quot;)
+    ht.insert(9, &quot;D&quot;)
+    ht.display()
+
+    print(&quot;Search(7):&quot;, ht.search(7))
+    ht.delete(13)
+    ht.display()
+</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract8th.py dfs and bfs graph traversal def dfs(matrix, visited, node):
+    print(node, end=&quot; &quot;)
+    visited[node] = true
+    for i in range(len(matrix)):
+        if matrix[node][i] == 1 and not visited[i]:
+            dfs(matrix, visited, i)
+
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    while queue:
+        node = queue.popleft()
+        print(node, end=&quot; &quot;)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+# dfs example
+nodes = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;, &#x27;e&#x27;]
+adj_matrix = [
+    [0,1,1,0,0],
+    [1,0,0,1,0],
+    [1,0,0,1,1],
+    [0,1,1,0,1],
+    [0,0,1,1,0]
+]
+print(&quot;dfs traversal (adjacency matrix):&quot;)
+visited = [false]*len(nodes)
+dfs(adj_matrix, visited, 0)
+
+# bfs example
+graph = {
+    &#x27;a&#x27;: [&#x27;b&#x27;, &#x27;c&#x27;],
+    &#x27;b&#x27;: [&#x27;a&#x27;, &#x27;d&#x27;],
+    &#x27;c&#x27;: [&#x27;a&#x27;, &#x27;d&#x27;, &#x27;e&#x27;],
+    &#x27;d&#x27;: [&#x27;b&#x27;, &#x27;c&#x27;, &#x27;e&#x27;],
+    &#x27;e&#x27;: [&#x27;c&#x27;, &#x27;d&#x27;]
+}
+print(&quot;\n\nbfs traversal (adjacency list):&quot;)
+bfs(graph, &#x27;a&#x27;)">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 8</div>
+          <h2>DFS and BFS Graph Traversal</h2>
+          <div class="file">pract8th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code8', this)">Copy Code</button>
+      </div>
+      <pre id="code8"><code>def dfs(matrix, visited, node):
+    print(node, end=&quot; &quot;)
+    visited[node] = True
+    for i in range(len(matrix)):
+        if matrix[node][i] == 1 and not visited[i]:
+            dfs(matrix, visited, i)
+
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    while queue:
+        node = queue.popleft()
+        print(node, end=&quot; &quot;)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+# DFS Example
+nodes = [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;, &#x27;E&#x27;]
+adj_matrix = [
+    [0,1,1,0,0],
+    [1,0,0,1,0],
+    [1,0,0,1,1],
+    [0,1,1,0,1],
+    [0,0,1,1,0]
+]
+print(&quot;DFS Traversal (Adjacency Matrix):&quot;)
+visited = [False]*len(nodes)
+dfs(adj_matrix, visited, 0)
+
+# BFS Example
+graph = {
+    &#x27;A&#x27;: [&#x27;B&#x27;, &#x27;C&#x27;],
+    &#x27;B&#x27;: [&#x27;A&#x27;, &#x27;D&#x27;],
+    &#x27;C&#x27;: [&#x27;A&#x27;, &#x27;D&#x27;, &#x27;E&#x27;],
+    &#x27;D&#x27;: [&#x27;B&#x27;, &#x27;C&#x27;, &#x27;E&#x27;],
+    &#x27;E&#x27;: [&#x27;C&#x27;, &#x27;D&#x27;]
+}
+print(&quot;\n\nBFS Traversal (Adjacency List):&quot;)
+bfs(graph, &#x27;A&#x27;)</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract9th.py floyd-warshall and held-karp import math
+
+def floyd_warshall(adj_matrix):
+    n = len(adj_matrix)
+    dist = [row[:] for row in adj_matrix]
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] &lt; dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    return dist
+
+def held_karp(dist, start=0):
+    n = len(dist)
+    all = 1 &lt;&lt; n
+    dp = [dict() for _ in range(all)]
+    prev = [dict() for _ in range(all)]
+    start_mask = 1 &lt;&lt; start
+    dp[start_mask][start] = 0
+    for mask in range(all):
+        if not (mask &amp; start_mask):
+            continue
+        for u, cost_u in dp[mask].items():
+            for v in range(n):
+                if mask &amp; (1 &lt;&lt; v):
+                    continue
+                new_mask = mask | (1 &lt;&lt; v)
+                new_cost = cost_u + dist[u][v]
+                if v not in dp[new_mask] or new_cost &lt; dp[new_mask][v]:
+                    dp[new_mask][v] = new_cost
+                    prev[new_mask][v] = u
+    full_mask = (1 &lt;&lt; n) - 1
+    best_cost = math.inf
+    best_end = none
+    for v, c in dp[full_mask].items():
+        total = c + dist[v][start]
+        if total &lt; best_cost:
+            best_cost = total
+            best_end = v
+    if best_end is none:
+        return none, math.inf
+    path = []
+    mask = full_mask
+    cur = best_end
+    while mask != start_mask or cur != start:
+        path.append(cur)
+        prev_cur = prev[mask].get(cur, none)
+        mask ^= (1 &lt;&lt; cur)
+        cur = prev_cur
+    path.append(start)
+    path.reverse()
+    return path, best_cost
+
+def nearest_neighbor(dist, start=0):
+    n = len(dist)
+    unvisited = set(range(n))
+    path = [start]
+    unvisited.remove(start)
+    current = start
+    while unvisited:
+        nxt = min(unvisited, key=lambda x: dist[current][x])
+        path.append(nxt)
+        unvisited.remove(nxt)
+        current = nxt
+    return path
+
+def path_cost(path, dist, return_to_start=true):
+    cost = 0
+    for i in range(len(path)-1):
+        cost += dist[path[i]][path[i+1]]
+    if return_to_start:
+        cost += dist[path[-1]][path[0]]
+    return cost
+
+def two_opt(path, dist, max_iter=1000):
+    n = len(path)
+    best = path[:]
+    improved = true
+    it = 0
+    while improved and it &lt; max_iter:
+        improved = false
+        it += 1
+        for i in range(1, n-2):
+            for j in range(i+1, n):
+                if j - i == 1:
+                    continue
+                new_path = best[:]
+                new_path[i:j] = reversed(best[i:j])
+                if path_cost(new_path, dist) &lt; path_cost(best, dist):
+                    best = new_path
+                    improved = true
+    return best
+
+def nearest_neighbor_with_2opt(dist, start=0):
+    p = nearest_neighbor(dist, start)
+    p2 = two_opt(p, dist)
+    cost_after = path_cost(p2, dist)
+    return p2, cost_after
+
+if __name__ == &quot;__main__&quot;:
+    inf = float(&#x27;inf&#x27;)
+    road_adj = [
+        [0, 10, inf, 30, 100],
+        [10, 0, 50, inf, inf],
+        [inf, 50, 0, 20, 10],
+        [30, inf, 20, 0, 60],
+        [100, inf, 10, 60, 0]
+    ]
+    dist = floyd_warshall(road_adj)
+    path, cost = held_karp(dist, start=0)
+    print(&quot;held-karp optimal cycle:&quot;, path, &quot;cost=&quot;, cost)
+    hpath, hcost = nearest_neighbor_with_2opt(dist, start=0)
+    print(&quot;heuristic cycle:&quot;, hpath, &quot;cost=&quot;, hcost)
+
+ ">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 9</div>
+          <h2>Floyd-Warshall and Held-Karp</h2>
+          <div class="file">pract9th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code9', this)">Copy Code</button>
+      </div>
+      <pre id="code9"><code>import math
+
+def floyd_warshall(adj_matrix):
+    n = len(adj_matrix)
+    dist = [row[:] for row in adj_matrix]
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] &lt; dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    return dist
+
+def held_karp(dist, start=0):
+    n = len(dist)
+    ALL = 1 &lt;&lt; n
+    dp = [dict() for _ in range(ALL)]
+    prev = [dict() for _ in range(ALL)]
+    start_mask = 1 &lt;&lt; start
+    dp[start_mask][start] = 0
+    for mask in range(ALL):
+        if not (mask &amp; start_mask):
+            continue
+        for u, cost_u in dp[mask].items():
+            for v in range(n):
+                if mask &amp; (1 &lt;&lt; v):
+                    continue
+                new_mask = mask | (1 &lt;&lt; v)
+                new_cost = cost_u + dist[u][v]
+                if v not in dp[new_mask] or new_cost &lt; dp[new_mask][v]:
+                    dp[new_mask][v] = new_cost
+                    prev[new_mask][v] = u
+    full_mask = (1 &lt;&lt; n) - 1
+    best_cost = math.inf
+    best_end = None
+    for v, c in dp[full_mask].items():
+        total = c + dist[v][start]
+        if total &lt; best_cost:
+            best_cost = total
+            best_end = v
+    if best_end is None:
+        return None, math.inf
+    path = []
+    mask = full_mask
+    cur = best_end
+    while mask != start_mask or cur != start:
+        path.append(cur)
+        prev_cur = prev[mask].get(cur, None)
+        mask ^= (1 &lt;&lt; cur)
+        cur = prev_cur
+    path.append(start)
+    path.reverse()
+    return path, best_cost
+
+def nearest_neighbor(dist, start=0):
+    n = len(dist)
+    unvisited = set(range(n))
+    path = [start]
+    unvisited.remove(start)
+    current = start
+    while unvisited:
+        nxt = min(unvisited, key=lambda x: dist[current][x])
+        path.append(nxt)
+        unvisited.remove(nxt)
+        current = nxt
+    return path
+
+def path_cost(path, dist, return_to_start=True):
+    cost = 0
+    for i in range(len(path)-1):
+        cost += dist[path[i]][path[i+1]]
+    if return_to_start:
+        cost += dist[path[-1]][path[0]]
+    return cost
+
+def two_opt(path, dist, max_iter=1000):
+    n = len(path)
+    best = path[:]
+    improved = True
+    it = 0
+    while improved and it &lt; max_iter:
+        improved = False
+        it += 1
+        for i in range(1, n-2):
+            for j in range(i+1, n):
+                if j - i == 1:
+                    continue
+                new_path = best[:]
+                new_path[i:j] = reversed(best[i:j])
+                if path_cost(new_path, dist) &lt; path_cost(best, dist):
+                    best = new_path
+                    improved = True
+    return best
+
+def nearest_neighbor_with_2opt(dist, start=0):
+    p = nearest_neighbor(dist, start)
+    p2 = two_opt(p, dist)
+    cost_after = path_cost(p2, dist)
+    return p2, cost_after
+
+if __name__ == &quot;__main__&quot;:
+    inf = float(&#x27;inf&#x27;)
+    road_adj = [
+        [0, 10, inf, 30, 100],
+        [10, 0, 50, inf, inf],
+        [inf, 50, 0, 20, 10],
+        [30, inf, 20, 0, 60],
+        [100, inf, 10, 60, 0]
+    ]
+    dist = floyd_warshall(road_adj)
+    path, cost = held_karp(dist, start=0)
+    print(&quot;Held-Karp optimal cycle:&quot;, path, &quot;cost=&quot;, cost)
+    hpath, hcost = nearest_neighbor_with_2opt(dist, start=0)
+    print(&quot;Heuristic cycle:&quot;, hpath, &quot;cost=&quot;, hcost)
+
+ </code></pre>
+    </section>
+    
+    <section class="card" data-search="pract10th.py binary search tree class node:
+    def __init__(self, key):
+        self.key = key
+        self.left = none
+        self.right = none
+
+class bst:
+    def __init__(self):
+        self.root = none
+
+    # ----- insert a new node -----
+    def insert(self, root, key):
+        if root is none:
+            return node(key)
+        elif key &lt; root.key:
+            root.left = self.insert(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.insert(root.right, key)
+        else:
+            print(f&quot;duplicate key {key} not allowed.&quot;)
+        return root
+
+    # ----- search a key -----
+    def search(self, root, key):
+        if root is none:
+            return none
+        if key == root.key:
+            return root
+        elif key &lt; root.key:
+            return self.search(root.left, key)
+        else:
+            return self.search(root.right, key)
+
+    # ----- find minimum value node (used in deletion) -----
+    def minvaluenode(self, node):
+        current = node
+        while current.left is not none:
+            current = current.left
+        return current
+
+    # ----- delete a node -----
+    def delete(self, root, key):
+        if root is none:
+            return root
+
+        if key &lt; root.key:
+            root.left = self.delete(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.delete(root.right, key)
+        else:
+            # node with one or no child
+            if root.left is none:
+                return root.right
+            elif root.right is none:
+                return root.left
+
+            # node with two children
+            temp = self.minvaluenode(root.right)
+            root.key = temp.key
+            root.right = self.delete(root.right, temp.key)
+
+        return root
+
+    # ----- display: traversals -----
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.key, end=&quot; &quot;)
+            self.inorder(root.right)
+
+    def preorder(self, root):
+        if root:
+            print(root.key, end=&quot; &quot;)
+            self.preorder(root.left)
+            self.preorder(root.right)
+
+    def postorder(self, root):
+        if root:
+            self.postorder(root.left)
+            self.postorder(root.right)
+            print(root.key, end=&quot; &quot;)
+
+# ----- main program -----
+if __name__ == &quot;__main__&quot;:
+    bst = bst()
+    root = none
+
+    while true:
+        print(&quot;\n-- binary search tree operations --&quot;)
+        print(&quot;1. insert&quot;)
+        print(&quot;2. delete&quot;)
+        print(&quot;3. search&quot;)
+        print(&quot;4. display (inorder / preorder / postorder)&quot;)
+        print(&quot;5. exit&quot;)
+
+        choice = int(input(&quot;enter your choice: &quot;))
+
+        if choice == 1:
+            key = int(input(&quot;enter value to insert: &quot;))
+            root = bst.insert(root, key)
+
+        elif choice == 2:
+            key = int(input(&quot;enter value to delete: &quot;))
+            root = bst.delete(root, key)
+
+        elif choice == 3:
+            key = int(input(&quot;enter value to search: &quot;))
+            result = bst.search(root, key)
+            if result:
+                print(f&quot;key {key} found in the bst.&quot;)
+            else:
+                print(f&quot;key {key} not found in the bst.&quot;)
+
+        elif choice == 4:
+            print(&quot;\ninorder traversal : &quot;, end=&quot;&quot;)
+            bst.inorder(root)
+            print(&quot;\npreorder traversal : &quot;, end=&quot;&quot;)
+            bst.preorder(root)
+            print(&quot;\npostorder traversal : &quot;, end=&quot;&quot;)
+            bst.postorder(root)
+            print()
+
+        elif choice == 5:
+            print(&quot;exiting program.&quot;)
+            break
+
+        else:
+            print(&quot;invalid choice! please try again.&quot;)">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 10</div>
+          <h2>Binary Search Tree</h2>
+          <div class="file">pract10th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code10', this)">Copy Code</button>
+      </div>
+      <pre id="code10"><code>class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    # ----- Insert a new node -----
+    def insert(self, root, key):
+        if root is None:
+            return Node(key)
+        elif key &lt; root.key:
+            root.left = self.insert(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.insert(root.right, key)
+        else:
+            print(f&quot;Duplicate key {key} not allowed.&quot;)
+        return root
+
+    # ----- Search a key -----
+    def search(self, root, key):
+        if root is None:
+            return None
+        if key == root.key:
+            return root
+        elif key &lt; root.key:
+            return self.search(root.left, key)
+        else:
+            return self.search(root.right, key)
+
+    # ----- Find minimum value node (used in deletion) -----
+    def minValueNode(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    # ----- Delete a node -----
+    def delete(self, root, key):
+        if root is None:
+            return root
+
+        if key &lt; root.key:
+            root.left = self.delete(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.delete(root.right, key)
+        else:
+            # Node with one or no child
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+
+            # Node with two children
+            temp = self.minValueNode(root.right)
+            root.key = temp.key
+            root.right = self.delete(root.right, temp.key)
+
+        return root
+
+    # ----- Display: Traversals -----
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.key, end=&quot; &quot;)
+            self.inorder(root.right)
+
+    def preorder(self, root):
+        if root:
+            print(root.key, end=&quot; &quot;)
+            self.preorder(root.left)
+            self.preorder(root.right)
+
+    def postorder(self, root):
+        if root:
+            self.postorder(root.left)
+            self.postorder(root.right)
+            print(root.key, end=&quot; &quot;)
+
+# ----- Main Program -----
+if __name__ == &quot;__main__&quot;:
+    bst = BST()
+    root = None
+
+    while True:
+        print(&quot;\n-- Binary Search Tree Operations --&quot;)
+        print(&quot;1. Insert&quot;)
+        print(&quot;2. Delete&quot;)
+        print(&quot;3. Search&quot;)
+        print(&quot;4. Display (Inorder / Preorder / Postorder)&quot;)
+        print(&quot;5. Exit&quot;)
+
+        choice = int(input(&quot;Enter your choice: &quot;))
+
+        if choice == 1:
+            key = int(input(&quot;Enter value to insert: &quot;))
+            root = bst.insert(root, key)
+
+        elif choice == 2:
+            key = int(input(&quot;Enter value to delete: &quot;))
+            root = bst.delete(root, key)
+
+        elif choice == 3:
+            key = int(input(&quot;Enter value to search: &quot;))
+            result = bst.search(root, key)
+            if result:
+                print(f&quot;Key {key} found in the BST.&quot;)
+            else:
+                print(f&quot;Key {key} not found in the BST.&quot;)
+
+        elif choice == 4:
+            print(&quot;\nInorder Traversal : &quot;, end=&quot;&quot;)
+            bst.inorder(root)
+            print(&quot;\nPreorder Traversal : &quot;, end=&quot;&quot;)
+            bst.preorder(root)
+            print(&quot;\nPostorder Traversal : &quot;, end=&quot;&quot;)
+            bst.postorder(root)
+            print()
+
+        elif choice == 5:
+            print(&quot;Exiting program.&quot;)
+            break
+
+        else:
+            print(&quot;Invalid choice! Please try again.&quot;)</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract11tht.py binary search tree — insert, search and delete class node:
+    def __init__(self, key):
+        self.key = key
+        self.left = none
+        self.right = none
+
+
+class binarysearchtree:
+    def __init__(self):
+        self.root = none
+
+    # insert a node into the bst
+    def insert(self, root, key):
+        if root is none:
+            return node(key)
+        elif key &lt; root.key:
+            root.left = self.insert(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.insert(root.right, key)
+        else:
+            print(&quot;duplicate key not allowed:&quot;, key)
+        return root
+
+    # search a node in the bst
+    def search(self, root, key):
+        if root is none or root.key == key:
+            return root
+        if key &lt; root.key:
+            return self.search(root.left, key)
+        return self.search(root.right, key)
+
+    # find the minimum value node (used in deletion)
+    def minvaluenode(self, node):
+        current = node
+        while current.left:
+            current = current.left
+        return current
+
+    # delete a node from bst
+    def delete(self, root, key):
+        if root is none:
+            return root
+
+        if key &lt; root.key:
+            root.left = self.delete(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.delete(root.right, key)
+        else:
+            # node with one or no child
+            if root.left is none:
+                return root.right
+            elif root.right is none:
+                return root.left
+
+            # node with two children: get inorder successor
+            temp = self.minvaluenode(root.right)
+            root.key = temp.key
+            root.right = self.delete(root.right, temp.key)
+        return root
+
+    # display bst (inorder traversal)
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.key, end=&quot; &quot;)
+            self.inorder(root.right)
+
+
+# --- main program ---
+bst = binarysearchtree()
+
+# insert nodes
+for key in [50, 30, 20, 40, 70, 60, 80]:
+    bst.root = bst.insert(bst.root, key)
+
+print(&quot;inorder traversal of bst:&quot;)
+bst.inorder(bst.root)
+print()
+
+# search operation
+key = 40
+if bst.search(bst.root, key):
+    print(f&quot;key {key} found in bst.&quot;)
+else:
+    print(f&quot;key {key} not found in bst.&quot;)
+
+# delete operation
+key_to_delete = 20
+bst.root = bst.delete(bst.root, key_to_delete)
+print(f&quot;\nbst after deleting {key_to_delete}:&quot;)
+bst.inorder(bst.root)
+print()
+">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 11</div>
+          <h2>Binary Search Tree — Insert, Search and Delete</h2>
+          <div class="file">pract11tht.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code11', this)">Copy Code</button>
+      </div>
+      <pre id="code11"><code>class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    # Insert a node into the BST
+    def insert(self, root, key):
+        if root is None:
+            return Node(key)
+        elif key &lt; root.key:
+            root.left = self.insert(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.insert(root.right, key)
+        else:
+            print(&quot;Duplicate key not allowed:&quot;, key)
+        return root
+
+    # Search a node in the BST
+    def search(self, root, key):
+        if root is None or root.key == key:
+            return root
+        if key &lt; root.key:
+            return self.search(root.left, key)
+        return self.search(root.right, key)
+
+    # Find the minimum value node (used in deletion)
+    def minValueNode(self, node):
+        current = node
+        while current.left:
+            current = current.left
+        return current
+
+    # Delete a node from BST
+    def delete(self, root, key):
+        if root is None:
+            return root
+
+        if key &lt; root.key:
+            root.left = self.delete(root.left, key)
+        elif key &gt; root.key:
+            root.right = self.delete(root.right, key)
+        else:
+            # Node with one or no child
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+
+            # Node with two children: get inorder successor
+            temp = self.minValueNode(root.right)
+            root.key = temp.key
+            root.right = self.delete(root.right, temp.key)
+        return root
+
+    # Display BST (Inorder Traversal)
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.key, end=&quot; &quot;)
+            self.inorder(root.right)
+
+
+# --- Main Program ---
+bst = BinarySearchTree()
+
+# Insert nodes
+for key in [50, 30, 20, 40, 70, 60, 80]:
+    bst.root = bst.insert(bst.root, key)
+
+print(&quot;Inorder traversal of BST:&quot;)
+bst.inorder(bst.root)
+print()
+
+# Search operation
+key = 40
+if bst.search(bst.root, key):
+    print(f&quot;Key {key} found in BST.&quot;)
+else:
+    print(f&quot;Key {key} not found in BST.&quot;)
+
+# Delete operation
+key_to_delete = 20
+bst.root = bst.delete(bst.root, key_to_delete)
+print(f&quot;\nBST after deleting {key_to_delete}:&quot;)
+bst.inorder(bst.root)
+print()
+</code></pre>
+    </section>
+    
+    <section class="card" data-search="pract12th.py city bst — search and population update class citynode:
+    def __init__(self, name, population):
+        self.name = name
+        self.population = population
+        self.left = none
+        self.right = none
+
+class citybst:
+    def __init__(self):
+        self.root = none
+
+    # insert a new city into bst
+    def insert(self, root, name, population):
+        if root is none:
+            return citynode(name, population)
+
+        if name.lower() &lt; root.name.lower():
+            root.left = self.insert(root.left, name, population)
+        elif name.lower() &gt; root.name.lower():
+            root.right = self.insert(root.right, name, population)
+        else:
+            print(f&quot;city &#x27;{name}&#x27; already exists. use update option instead.&quot;)
+        
+        return root
+
+    # search for a city and count comparisons
+    def search(self, root, name, comparisons=0):
+        if root is none:
+            return none, comparisons
+        comparisons += 1
+        if name.lower() == root.name.lower():
+            return root, comparisons
+        elif name.lower() &lt; root.name.lower():
+            return self.search(root.left, name, comparisons)
+        else:
+            return self.search(root.right, name, comparisons)
+
+    # update population of a city
+    def update_population(self, root, name, new_population):
+        city, _ = self.search(root, name)
+        if city:
+            city.population = new_population
+            print(f&quot;population of &#x27;{name}&#x27; updated to {new_population}.&quot;)
+        else:
+            print(f&quot;city &#x27;{name}&#x27; not found.&quot;)
+
+    # find the minimum value node (used in deletion)
+    def minvaluenode(self, node):
+        current = node
+        while current.left is not none:
+            current = current.left
+        return current
+
+    # delete a city
+    def delete(self, root, name):
+        if root is none:
+            return root
+        if name.lower() &lt; root.name.lower():
+            root.left = self.delete(root.left, name)
+        elif name.lower() &gt; root.name.lower():
+            root.right = self.delete(root.right, name)
+        else:
+            # node with one or no child
+            if root.left is none:
+                return root.right
+            elif root.right is none:
+                return root.left
+            # node with two children
+            temp = self.minvaluenode(root.right)
+            root.name = temp.name
+            root.population = temp.population
+            root.right = self.delete(root.right, temp.name)
+        return root
+
+    # display cities in ascending order
+    def display_ascending(self, root):
+        if root:
+            self.display_ascending(root.left)
+            print(f&quot;{root.name}: {root.population}&quot;)
+            self.display_ascending(root.right)
+
+    # display cities in descending order
+    def display_descending(self, root):
+        if root:
+            self.display_descending(root.right)
+            print(f&quot;{root.name}: {root.population}&quot;)
+            self.display_descending(root.left)
+
+    # count maximum comparisons (equal to tree height)
+    def max_comparisons(self, root):
+        if root is none:
+            return 0
+        left_height = self.max_comparisons(root.left)
+        right_height = self.max_comparisons(root.right)
+        return 1 + max(left_height, right_height)
+
+# -- main program --
+bst = citybst()
+
+while true:
+    print(&quot;\n-- city management system --&quot;)
+    print(&quot;1. add a new city&quot;)
+    print(&quot;2. delete a city&quot;)
+    print(&quot;3. update population&quot;)
+    print(&quot;4. display cities in ascending order&quot;)
+    print(&quot;5. display cities in descending order&quot;)
+    print(&quot;6. search for a city&quot;)
+    print(&quot;7. show maximum comparisons required for search&quot;)
+    print(&quot;8. exit&quot;)
+
+    choice = input(&quot;enter your choice (1-8): &quot;)
+
+    if choice == &#x27;1&#x27;:
+        name = input(&quot;enter city name: &quot;)
+        population = int(input(&quot;enter population: &quot;))
+        bst.root = bst.insert(bst.root, name, population)
+
+    elif choice == &#x27;2&#x27;:
+        name = input(&quot;enter city name to delete: &quot;)
+        bst.root = bst.delete(bst.root, name)
+
+    elif choice == &#x27;3&#x27;:
+        name = input(&quot;enter city name to update: &quot;)
+        new_pop = int(input(&quot;enter new population: &quot;))
+        bst.update_population(bst.root, name, new_pop)
+
+    elif choice == &#x27;4&#x27;:
+        print(&quot;\ncities in ascending order:&quot;)
+        bst.display_ascending(bst.root)
+
+    elif choice == &#x27;5&#x27;:
+        print(&quot;\ncities in descending order:&quot;)
+        bst.display_descending(bst.root)
+
+    elif choice == &#x27;6&#x27;:
+        name = input(&quot;enter city name to search: &quot;)
+        city, comps = bst.search(bst.root, name)
+        if city:
+            print(f&quot;city found: {city.name}, population: {city.population}&quot;)
+            print(f&quot;comparisons made: {comps}&quot;)
+        else:
+            print(f&quot;city &#x27;{name}&#x27; not found after {comps} comparisons.&quot;)
+
+    elif choice == &#x27;7&#x27;:
+        max_comp = bst.max_comparisons(bst.root)
+        print(f&quot;maximum comparisons required for search (tree height): {max_comp}&quot;)
+
+    elif choice == &#x27;8&#x27;:
+        print(&quot;exiting...&quot;)
+        break
+
+    else:
+        print(&quot;invalid choice. please try again.&quot;)">
+      <div class="card-head">
+        <div>
+          <div class="num">PRACTICAL 12</div>
+          <h2>City BST — Search and Population Update</h2>
+          <div class="file">pract12th.py</div>
+        </div>
+        <button class="copy" onclick="copyCode('code12', this)">Copy Code</button>
+      </div>
+      <pre id="code12"><code>class CityNode:
+    def __init__(self, name, population):
+        self.name = name
+        self.population = population
+        self.left = None
+        self.right = None
+
+class CityBST:
+    def __init__(self):
+        self.root = None
+
+    # Insert a new city into BST
+    def insert(self, root, name, population):
+        if root is None:
+            return CityNode(name, population)
+
+        if name.lower() &lt; root.name.lower():
+            root.left = self.insert(root.left, name, population)
+        elif name.lower() &gt; root.name.lower():
+            root.right = self.insert(root.right, name, population)
+        else:
+            print(f&quot;City &#x27;{name}&#x27; already exists. Use update option instead.&quot;)
+        
+        return root
+
+    # Search for a city and count comparisons
+    def search(self, root, name, comparisons=0):
+        if root is None:
+            return None, comparisons
+        comparisons += 1
+        if name.lower() == root.name.lower():
+            return root, comparisons
+        elif name.lower() &lt; root.name.lower():
+            return self.search(root.left, name, comparisons)
+        else:
+            return self.search(root.right, name, comparisons)
+
+    # Update population of a city
+    def update_population(self, root, name, new_population):
+        city, _ = self.search(root, name)
+        if city:
+            city.population = new_population
+            print(f&quot;Population of &#x27;{name}&#x27; updated to {new_population}.&quot;)
+        else:
+            print(f&quot;City &#x27;{name}&#x27; not found.&quot;)
+
+    # Find the minimum value node (used in deletion)
+    def minValueNode(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    # Delete a city
+    def delete(self, root, name):
+        if root is None:
+            return root
+        if name.lower() &lt; root.name.lower():
+            root.left = self.delete(root.left, name)
+        elif name.lower() &gt; root.name.lower():
+            root.right = self.delete(root.right, name)
+        else:
+            # Node with one or no child
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+            # Node with two children
+            temp = self.minValueNode(root.right)
+            root.name = temp.name
+            root.population = temp.population
+            root.right = self.delete(root.right, temp.name)
+        return root
+
+    # Display cities in ascending order
+    def display_ascending(self, root):
+        if root:
+            self.display_ascending(root.left)
+            print(f&quot;{root.name}: {root.population}&quot;)
+            self.display_ascending(root.right)
+
+    # Display cities in descending order
+    def display_descending(self, root):
+        if root:
+            self.display_descending(root.right)
+            print(f&quot;{root.name}: {root.population}&quot;)
+            self.display_descending(root.left)
+
+    # Count maximum comparisons (equal to tree height)
+    def max_comparisons(self, root):
+        if root is None:
+            return 0
+        left_height = self.max_comparisons(root.left)
+        right_height = self.max_comparisons(root.right)
+        return 1 + max(left_height, right_height)
+
+# -- Main Program --
+bst = CityBST()
+
+while True:
+    print(&quot;\n-- City Management System --&quot;)
+    print(&quot;1. Add a new city&quot;)
+    print(&quot;2. Delete a city&quot;)
+    print(&quot;3. Update population&quot;)
+    print(&quot;4. Display cities in ascending order&quot;)
+    print(&quot;5. Display cities in descending order&quot;)
+    print(&quot;6. Search for a city&quot;)
+    print(&quot;7. Show maximum comparisons required for search&quot;)
+    print(&quot;8. Exit&quot;)
+
+    choice = input(&quot;Enter your choice (1-8): &quot;)
+
+    if choice == &#x27;1&#x27;:
+        name = input(&quot;Enter city name: &quot;)
+        population = int(input(&quot;Enter population: &quot;))
+        bst.root = bst.insert(bst.root, name, population)
+
+    elif choice == &#x27;2&#x27;:
+        name = input(&quot;Enter city name to delete: &quot;)
+        bst.root = bst.delete(bst.root, name)
+
+    elif choice == &#x27;3&#x27;:
+        name = input(&quot;Enter city name to update: &quot;)
+        new_pop = int(input(&quot;Enter new population: &quot;))
+        bst.update_population(bst.root, name, new_pop)
+
+    elif choice == &#x27;4&#x27;:
+        print(&quot;\nCities in ascending order:&quot;)
+        bst.display_ascending(bst.root)
+
+    elif choice == &#x27;5&#x27;:
+        print(&quot;\nCities in descending order:&quot;)
+        bst.display_descending(bst.root)
+
+    elif choice == &#x27;6&#x27;:
+        name = input(&quot;Enter city name to search: &quot;)
+        city, comps = bst.search(bst.root, name)
+        if city:
+            print(f&quot;City found: {city.name}, Population: {city.population}&quot;)
+            print(f&quot;Comparisons made: {comps}&quot;)
+        else:
+            print(f&quot;City &#x27;{name}&#x27; not found after {comps} comparisons.&quot;)
+
+    elif choice == &#x27;7&#x27;:
+        max_comp = bst.max_comparisons(bst.root)
+        print(f&quot;Maximum comparisons required for search (tree height): {max_comp}&quot;)
+
+    elif choice == &#x27;8&#x27;:
+        print(&quot;Exiting...&quot;)
+        break
+
+    else:
+        print(&quot;Invalid choice. Please try again.&quot;)</code></pre>
+    </section>
+    
+<div id="empty" class="empty">No matching practical found.</div>
+</main>
+<script>
+function filterCards(){
+ const q=document.getElementById('search').value.toLowerCase().trim();
+ const cards=[...document.querySelectorAll('.card')];
+ let shown=0;
+ cards.forEach(c=>{
+   const ok=!q || c.dataset.search.includes(q);
+   c.style.display=ok?'block':'none';
+   if(ok) shown++;
+ });
+ document.getElementById('count').textContent=shown+' of '+cards.length+' practicals shown';
+ document.getElementById('empty').style.display=shown?'none':'block';
+}
+function clearSearch(){document.getElementById('search').value='';filterCards();}
+async function copyCode(id,btn){
+ const text=document.getElementById(id).innerText;
+ try{await navigator.clipboard.writeText(text);}
+ catch(e){
+   const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);
+   ta.select();document.execCommand('copy');ta.remove();
+ }
+ const old=btn.textContent;btn.textContent='Copied!';btn.classList.add('done');
+ setTimeout(()=>{btn.textContent=old;btn.classList.remove('done')},1200);
+}
+filterCards();
+</script>
+</body>
+</html>
